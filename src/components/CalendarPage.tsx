@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Flex, Button, Segmented, Tag, Select, Space } from 'antd';
+import { Flex, Button, Segmented, Tag, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppointmentStore } from '../store/appointmentStore';
 import { AppointmentCalendar } from './AppointmentCalendar';
