@@ -117,10 +117,10 @@ export function CalendarPage() {
         <p className="calendar-page-subtitle">Manage your work and home schedule</p>
       </div>
 
-      {/* Calendar */}
+      {/* Calendar with integrated legend */}
       <AppointmentCalendar />
 
-      {/* Legend */}
+      {/* Legend showing appointment types */}
       <AppointmentLegend />
 
       {/* Add/Edit Modal */}
