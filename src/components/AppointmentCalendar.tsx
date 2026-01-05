@@ -27,7 +27,7 @@ export function AppointmentCalendar() {
   }, [setSelectedDate]);
 
   // Custom cell renderer to show appointment indicators
-  const cellRender = useCallback((date: Dayjs, info: CellRenderInfo<Dayjs>) => {
+  const cellRender = useCallback((date: Dayjs, info: CellRenderInfo) => {
     if (info.type !== 'date') {
       return info.originNode;
     }
