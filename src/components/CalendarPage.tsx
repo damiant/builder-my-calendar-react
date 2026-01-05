@@ -20,7 +20,7 @@ const categoryOptions = [
 ];
 
 export function CalendarPage() {
-  const { viewMode, setViewMode, categoryFilter, setCategoryFilter } = useAppointmentStore();
+  const { viewMode, setViewMode, setCategoryFilter } = useAppointmentStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<AppointmentCategory[]>(['work', 'home']);
 
