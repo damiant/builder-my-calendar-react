@@ -7,7 +7,7 @@ import { useAppointmentStore } from '../store/appointmentStore';
 import { CATEGORY_COLORS } from '../types/appointment';
 
 interface CellRenderInfo {
-  type: 'date' | 'month';
+  type: string;
   originNode: React.ReactNode;
 }
 
@@ -27,7 +27,7 @@ export function AppointmentCalendar() {
   }, [setSelectedDate]);
 
   // Custom cell renderer to show appointment indicators
-  const cellRender = useCallback((date: Dayjs, info: CellRenderInfo) => {
+  const cellRender = useCallback((date: Dayjs, info: CellRenderInfo): React.ReactNode => {
     if (info.type !== 'date') {
       return info.originNode;
     }
