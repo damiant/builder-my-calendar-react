@@ -5,7 +5,11 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { useAppointmentStore } from '../store/appointmentStore';
 import { CATEGORY_COLORS } from '../types/appointment';
-import type { CellRenderInfo } from 'rc-picker/lib/interface';
+
+interface CellRenderInfo {
+  type: 'date' | 'month';
+  originNode: React.ReactNode;
+}
 
 export function AppointmentCalendar() {
   const { getAppointmentsByDate, selectedDate, setSelectedDate, viewMode } = useAppointmentStore();
