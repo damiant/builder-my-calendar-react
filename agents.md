@@ -1,3 +1,13 @@
 - After making all the code changes needed to meet the user request run `npm run check` to check for build, lint and test errors and fix any found.
 - Do not hard colors, font sizes, padding etc. Always use css variables.
 - Use `https://ant.design/llms.txt` for this projects component library, design specifications, and integration guides.
+- Use modern React with functional components and Hooks exclusively; never use class components.
+- Keep components small, single-responsibility, and refactor when a file exceeds ~200 lines.
+- Extract reusable logic into custom Hooks prefixed with `use` and keep them side-effect–aware.
+- Follow a flat, predictable project structure and avoid unnecessary directory nesting.
+- Centralize shared state using Zustand and avoid prop drilling.
+- Use TypeScript everywhere with strict typing for props, hooks, state, and API responses; never use `any`.
+- Perform data fetching and side effects in hooks or service layers, not directly in render logic.
+- Optimize performance by memoizing derived values and callbacks with `useMemo` and `useCallback` only when justified.
+- Write semantic, accessible JSX using proper HTML elements, labels, and ARIA attributes when required.
+- Enforce consistency and quality using ESLint, Prettier, and automated tests rather than manual conventions.
