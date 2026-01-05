@@ -53,7 +53,7 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
   const handleSubmit = useCallback(async () => {
     try {
       const values = await form.validateFields();
-      
+
       const appointmentData = {
         title: values.title,
         date: values.date.format('YYYY-MM-DD'),
@@ -89,12 +89,7 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
       destroyOnHidden
       width={480}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        requiredMark="optional"
-        style={{ marginTop: 16 }}
-      >
+      <Form form={form} layout="vertical" requiredMark="optional" style={{ marginTop: 16 }}>
         <Form.Item
           name="title"
           label="Title"
@@ -113,11 +108,7 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item
-            name="time"
-            label="Time"
-            style={{ flex: 1 }}
-          >
+          <Form.Item name="time" label="Time" style={{ flex: 1 }}>
             <TimePicker format="HH:mm" style={{ width: '100%' }} />
           </Form.Item>
         </Flex>
@@ -133,21 +124,13 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item
-          name="description"
-          label="Description"
-        >
-          <TextArea 
-            placeholder="Add a description (optional)" 
-            rows={3}
-          />
+        <Form.Item name="description" label="Description">
+          <TextArea placeholder="Add a description (optional)" rows={3} />
         </Form.Item>
 
         <Form.Item style={{ marginBottom: 0, marginTop: 24 }}>
           <Flex justify="flex-end" gap={8}>
-            <Button onClick={handleCancel}>
-              Cancel
-            </Button>
+            <Button onClick={handleCancel}>Cancel</Button>
             <Button type="primary" onClick={handleSubmit}>
               {isEditMode ? 'Save Changes' : 'Create Appointment'}
             </Button>

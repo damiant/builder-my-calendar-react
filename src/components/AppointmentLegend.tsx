@@ -11,12 +11,15 @@ export function AppointmentLegend() {
     const appointments = getFilteredAppointments();
 
     // Get unique appointments by title, limit to 4 for display
-    const uniqueByTitle = appointments.reduce((acc, apt) => {
-      if (!acc.find((a) => a.title === apt.title)) {
-        acc.push(apt);
-      }
-      return acc;
-    }, [] as typeof appointments);
+    const uniqueByTitle = appointments.reduce(
+      (acc, apt) => {
+        if (!acc.find((a) => a.title === apt.title)) {
+          acc.push(apt);
+        }
+        return acc;
+      },
+      [] as typeof appointments
+    );
 
     // Sort by selected date first, then by date
     const sorted = uniqueByTitle.sort((a, b) => {
@@ -58,9 +61,7 @@ export function AppointmentLegend() {
               flexShrink: 0,
             }}
           />
-          <span style={{ fontSize: 13, color: '#374151' }}>
-            {item.title}
-          </span>
+          <span style={{ fontSize: 13, color: '#374151' }}>{item.title}</span>
         </Flex>
       ))}
     </Flex>

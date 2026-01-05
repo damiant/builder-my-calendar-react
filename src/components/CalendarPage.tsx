@@ -24,23 +24,32 @@ export function CalendarPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<AppointmentCategory[]>(['work', 'home']);
 
-  const handleViewChange = useCallback((value: string | number) => {
-    setViewMode(value as CalendarViewMode);
-  }, [setViewMode]);
+  const handleViewChange = useCallback(
+    (value: string | number) => {
+      setViewMode(value as CalendarViewMode);
+    },
+    [setViewMode]
+  );
 
-  const handleFilterChange = useCallback((values: AppointmentCategory[]) => {
-    setSelectedFilters(values);
-    if (values.length === 0 || values.length === 2) {
-      setCategoryFilter('all');
-    } else {
-      setCategoryFilter(values[0]);
-    }
-  }, [setCategoryFilter]);
+  const handleFilterChange = useCallback(
+    (values: AppointmentCategory[]) => {
+      setSelectedFilters(values);
+      if (values.length === 0 || values.length === 2) {
+        setCategoryFilter('all');
+      } else {
+        setCategoryFilter(values[0]);
+      }
+    },
+    [setCategoryFilter]
+  );
 
-  const handleTagClose = useCallback((category: AppointmentCategory) => {
-    const newFilters = selectedFilters.filter((f) => f !== category);
-    handleFilterChange(newFilters);
-  }, [selectedFilters, handleFilterChange]);
+  const handleTagClose = useCallback(
+    (category: AppointmentCategory) => {
+      const newFilters = selectedFilters.filter((f) => f !== category);
+      handleFilterChange(newFilters);
+    },
+    [selectedFilters, handleFilterChange]
+  );
 
   const handleNewAppointment = useCallback(() => {
     setIsModalOpen(true);
@@ -57,24 +66,16 @@ export function CalendarPage() {
         <Flex gap={8} align="center">
           {/* Filter Tags */}
           {selectedFilters.includes('work') && (
-            <Tag
-              closable
-              onClose={() => handleTagClose('work')}
-              style={{ margin: 0 }}
-            >
+            <Tag closable onClose={() => handleTagClose('work')} style={{ margin: 0 }}>
               Work
             </Tag>
           )}
           {selectedFilters.includes('home') && (
-            <Tag
-              closable
-              onClose={() => handleTagClose('home')}
-              style={{ margin: 0 }}
-            >
+            <Tag closable onClose={() => handleTagClose('home')} style={{ margin: 0 }}>
               Home
             </Tag>
           )}
-          
+
           {/* Filter Dropdown */}
           <Select
             mode="multiple"
@@ -94,18 +95,10 @@ export function CalendarPage() {
 
         <Flex gap={16} align="center">
           {/* View Mode Toggle */}
-          <Segmented
-            options={viewOptions}
-            value={viewMode}
-            onChange={handleViewChange}
-          />
+          <Segmented options={viewOptions} value={viewMode} onChange={handleViewChange} />
 
           {/* New Appointment Button */}
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={handleNewAppointment}
-          >
+          <Button type="primary" icon={<PlusOutlined />} onClick={handleNewAppointment}>
             New Appointment
           </Button>
         </Flex>
@@ -124,10 +117,7 @@ export function CalendarPage() {
       <AppointmentLegend />
 
       {/* Add/Edit Modal */}
-      <AppointmentModal
-        open={isModalOpen}
-        onClose={handleModalClose}
-      />
+      <AppointmentModal open={isModalOpen} onClose={handleModalClose} />
     </div>
   );
 }

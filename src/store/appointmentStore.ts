@@ -93,9 +93,7 @@ export const useAppointmentStore = create<AppointmentState>((set, get) => ({
 
   updateAppointment: (id, updates) => {
     set((state) => ({
-      appointments: state.appointments.map((apt) =>
-        apt.id === id ? { ...apt, ...updates } : apt
-      ),
+      appointments: state.appointments.map((apt) => (apt.id === id ? { ...apt, ...updates } : apt)),
     }));
   },
 
