@@ -1,0 +1,3 @@
+- After making all the code changes needed to meet the user request run `npm run check` to check for build, lint and test errors and fix any found.
+- Do not hard colors, font sizes, padding etc. Always use css variables.
+- Use `https://ant.design/llms.txt` for this projects component library, design specifications, and integration guides.
