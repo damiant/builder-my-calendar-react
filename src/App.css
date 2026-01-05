@@ -32,10 +32,30 @@
 
 .appointment-calendar .ant-picker-cell-selected .ant-picker-calendar-date {
   background-color: #ecfccb !important;
+  border-radius: 4px;
 }
 
 .appointment-calendar .ant-picker-cell-selected .ant-picker-calendar-date-value {
   color: #65a30d !important;
+  font-weight: 600;
+}
+
+.appointment-calendar .ant-picker-cell-today .ant-picker-calendar-date-value {
+  color: #65a30d;
+}
+
+.appointment-calendar .ant-picker-calendar {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.appointment-calendar .ant-picker-calendar-header {
+  padding: 0 0 8px 0;
+}
+
+.appointment-calendar .ant-picker-panel {
+  border-top: 1px solid #f0f0f0;
 }
 
 /* Legend styles */
