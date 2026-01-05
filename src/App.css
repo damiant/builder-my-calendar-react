@@ -1,42 +1,95 @@
-#root {
-  max-width: 1280px;
+/* App-specific styles */
+
+.calendar-page {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: var(--spacing-lg);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.calendar-page-header {
+  margin-bottom: var(--spacing-lg);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.calendar-page-title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.calendar-page-subtitle {
+  color: #6b7280;
+  font-size: 14px;
+  margin: 0;
 }
 
-.card {
-  padding: 2em;
+/* Calendar customizations */
+.appointment-calendar .ant-picker-calendar-date-content {
+  height: auto;
+  min-height: 60px;
 }
 
-.read-the-docs {
-  color: #888;
+.appointment-calendar .ant-picker-cell-selected .ant-picker-calendar-date {
+  background-color: #ecfccb !important;
+  border-radius: 4px;
+}
+
+.appointment-calendar .ant-picker-cell-selected .ant-picker-calendar-date-value {
+  color: #65a30d !important;
+  font-weight: 600;
+}
+
+.appointment-calendar .ant-picker-cell-today .ant-picker-calendar-date-value {
+  color: #65a30d;
+}
+
+.appointment-calendar .ant-picker-calendar {
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.appointment-calendar .ant-picker-calendar-header {
+  padding: 0 0 8px 0;
+}
+
+.appointment-calendar .ant-picker-panel {
+  border-top: 1px solid #f0f0f0;
+}
+
+/* Legend styles */
+.appointment-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Filter tags */
+.filter-tag {
+  cursor: pointer;
+  user-select: none;
+}
+
+.filter-tag.active {
+  opacity: 1;
+}
+
+.filter-tag:not(.active) {
+  opacity: 0.6;
 }
