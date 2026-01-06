@@ -1,11 +1,12 @@
 import { useState, useCallback } from 'react';
-import { Flex, Button, Segmented, Tag, Select } from 'antd';
+import { Flex, Button, Segmented, Tag, Select, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppointmentStore } from '../store/appointmentStore';
 import { AppointmentCalendar } from './AppointmentCalendar';
 import { AppointmentLegend } from './AppointmentLegend';
 import { AppointmentModal } from './AppointmentModal';
-import type { CalendarViewMode, AppointmentCategory } from '../types/appointment';
+import { PlannerView } from './PlannerView';
+import type { CalendarViewMode, AppointmentCategory, Appointment } from '../types/appointment';
 import '../App.css';
 
 const viewOptions = [
@@ -20,9 +21,10 @@ const categoryOptions = [
 ];
 
 export function CalendarPage() {
-  const { viewMode, setViewMode, setCategoryFilter } = useAppointmentStore();
+  const { viewMode, setViewMode, setCategoryFilter, isLoading } = useAppointmentStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<AppointmentCategory[]>(['work', 'home']);
+  const [editingAppointment, setEditingAppointment] = useState<Appointment | undefined>(undefined);
 
   const handleViewChange = useCallback(
     (value: string | number) => {
@@ -52,12 +54,30 @@ export function CalendarPage() {
   );
 
   const handleNewAppointment = useCallback(() => {
+    setEditingAppointment(undefined);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleEditAppointment = useCallback((appointment: Appointment) => {
+    setEditingAppointment(appointment);
     setIsModalOpen(true);
   }, []);
 
   const handleModalClose = useCallback(() => {
     setIsModalOpen(false);
+    setEditingAppointment(undefined);
   }, []);
+
+  // Show loading spinner while initializing
+  if (isLoading) {
+    return (
+      <div className="calendar-page">
+        <Flex justify="center" align="center" style={{ minHeight: '50vh' }}>
+          <Spin size="large" />
+        </Flex>
+      </div>
+    );
+  }
 
   return (
     <div className="calendar-page">
@@ -110,14 +130,25 @@ export function CalendarPage() {
         <p className="calendar-page-subtitle">Manage your work and home schedule</p>
       </div>
 
-      {/* Calendar with integrated legend */}
-      <AppointmentCalendar />
+      {/* Conditional View Rendering */}
+      {viewMode === 'planner' ? (
+        <PlannerView onEditAppointment={handleEditAppointment} />
+      ) : (
+        <>
+          {/* Calendar with integrated legend */}
+          <AppointmentCalendar onEditAppointment={handleEditAppointment} />
 
-      {/* Legend showing appointment types */}
-      <AppointmentLegend />
+          {/* Legend showing appointment types */}
+          <AppointmentLegend />
+        </>
+      )}
 
       {/* Add/Edit Modal */}
-      <AppointmentModal open={isModalOpen} onClose={handleModalClose} />
+      <AppointmentModal
+        open={isModalOpen}
+        onClose={handleModalClose}
+        appointment={editingAppointment}
+      />
     </div>
   );
 }
