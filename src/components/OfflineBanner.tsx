@@ -11,9 +11,10 @@ export function OfflineBanner() {
     return null;
   }
 
-  const message = pendingCount > 0
-    ? `You're offline • ${pendingCount} pending change${pendingCount > 1 ? 's' : ''}`
-    : "You're offline";
+  const message =
+    pendingCount > 0
+      ? `You're offline • ${pendingCount} pending change${pendingCount > 1 ? 's' : ''}`
+      : "You're offline";
 
   return (
     <div className="offline-banner" style={{ marginBottom: 16 }}>

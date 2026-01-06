@@ -1,5 +1,17 @@
 import { useCallback, useEffect } from 'react';
-import { Modal, Form, Input, DatePicker, TimePicker, Radio, Button, Flex, Switch, Alert, Popconfirm } from 'antd';
+import {
+  Modal,
+  Form,
+  Input,
+  DatePicker,
+  TimePicker,
+  Radio,
+  Button,
+  Flex,
+  Switch,
+  Alert,
+  Popconfirm,
+} from 'antd';
 import { DeleteOutlined, WifiOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useAppointmentStore } from '../store/appointmentStore';

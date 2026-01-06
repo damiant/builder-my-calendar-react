@@ -44,7 +44,9 @@ export function PlannerView({ onEditAppointment }: PlannerViewProps) {
   if (appointments.length === 0) {
     return (
       <Empty
-        image={<CalendarOutlined style={{ fontSize: 64, color: 'var(--ant-color-text-quaternary)' }} />}
+        image={
+          <CalendarOutlined style={{ fontSize: 64, color: 'var(--ant-color-text-quaternary)' }} />
+        }
         description={
           <Flex vertical align="center" gap={4}>
             <span style={{ fontSize: 16, color: 'var(--ant-color-text-secondary)' }}>
@@ -64,11 +66,7 @@ export function PlannerView({ onEditAppointment }: PlannerViewProps) {
     <div className="planner-view">
       <div className="planner-grid">
         {appointments.map((appointment) => (
-          <AppointmentCard
-            key={appointment.id}
-            appointment={appointment}
-            onEdit={handleEdit}
-          />
+          <AppointmentCard key={appointment.id} appointment={appointment} onEdit={handleEdit} />
         ))}
       </div>
     </div>

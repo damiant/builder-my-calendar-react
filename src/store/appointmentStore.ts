@@ -314,7 +314,9 @@ export const useAppointmentStore = create<AppointmentState>()(
             if (operation.operationType !== 'delete') {
               set((state) => ({
                 appointments: state.appointments.map((apt) =>
-                  apt.id === operation.appointmentId ? { ...apt, syncStatus: 'synced' as SyncStatus } : apt
+                  apt.id === operation.appointmentId
+                    ? { ...apt, syncStatus: 'synced' as SyncStatus }
+                    : apt
                 ),
               }));
             }

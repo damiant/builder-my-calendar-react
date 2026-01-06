@@ -18,7 +18,10 @@ interface AppointmentCalendarProps {
   onNewAppointment: () => void;
 }
 
-export function AppointmentCalendar({ onEditAppointment, onNewAppointment }: AppointmentCalendarProps) {
+export function AppointmentCalendar({
+  onEditAppointment,
+  onNewAppointment,
+}: AppointmentCalendarProps) {
   const { getAppointmentsByDate, selectedDate, setSelectedDate, viewMode } = useAppointmentStore();
 
   const currentValue = useMemo(() => {
