@@ -3,7 +3,6 @@ import { Flex, Button, Segmented, Tag, Select, Spin } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppointmentStore } from '../store/appointmentStore';
 import { AppointmentCalendar } from './AppointmentCalendar';
-import { AppointmentLegend } from './AppointmentLegend';
 import { AppointmentModal } from './AppointmentModal';
 import { PlannerView } from './PlannerView';
 import { OfflineBanner } from './OfflineBanner';
@@ -139,13 +138,7 @@ export function CalendarPage() {
       {viewMode === 'planner' ? (
         <PlannerView onEditAppointment={handleEditAppointment} />
       ) : (
-        <>
-          {/* Calendar with integrated legend */}
-          <AppointmentCalendar onEditAppointment={handleEditAppointment} />
-
-          {/* Legend showing appointment types */}
-          <AppointmentLegend />
-        </>
+        <AppointmentCalendar onEditAppointment={handleEditAppointment} />
       )}
 
       {/* Add/Edit Modal */}
