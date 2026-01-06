@@ -1,5 +1,6 @@
-import { useCallback, useEffect } from 'react';
-import { Modal, Form, Input, DatePicker, TimePicker, Radio, Button, Flex } from 'antd';
+import { useCallback, useEffect, useState } from 'react';
+import { Modal, Form, Input, DatePicker, TimePicker, Radio, Button, Flex, Switch, Alert, Popconfirm } from 'antd';
+import { DeleteOutlined, WifiOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useAppointmentStore } from '../store/appointmentStore';
 import type { Appointment, AppointmentCategory } from '../types/appointment';
@@ -18,12 +19,15 @@ interface FormValues {
   time?: dayjs.Dayjs;
   category: AppointmentCategory;
   description?: string;
+  isAllDay: boolean;
 }
 
 export function AppointmentModal({ open, onClose, appointment }: AppointmentModalProps) {
   const [form] = Form.useForm<FormValues>();
-  const { addAppointment, updateAppointment, selectedDate } = useAppointmentStore();
+  const { addAppointment, updateAppointment, deleteAppointment, selectedDate, isOnline } =
+    useAppointmentStore();
 
+  const [isAllDay, setIsAllDay] = useState(false);
   const isEditMode = !!appointment;
 
   // Reset form when modal opens/closes
@@ -31,24 +35,41 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
     if (open) {
       if (appointment) {
         // Edit mode: populate form with existing data
+        const allDay = appointment.isAllDay ?? false;
+        setIsAllDay(allDay);
         form.setFieldsValue({
           title: appointment.title,
           date: dayjs(appointment.date),
-          time: appointment.time ? dayjs(appointment.time, 'HH:mm') : undefined,
+          time: appointment.time && !allDay ? dayjs(appointment.time, 'HH:mm') : undefined,
           category: appointment.category,
           description: appointment.description,
+          isAllDay: allDay,
         });
       } else {
         // Create mode: set defaults
+        setIsAllDay(false);
         form.setFieldsValue({
           date: selectedDate ? dayjs(selectedDate) : dayjs(),
           category: 'work',
+          isAllDay: false,
         });
       }
     } else {
       form.resetFields();
+      setIsAllDay(false);
     }
   }, [open, appointment, selectedDate, form]);
+
+  const handleAllDayChange = useCallback(
+    (checked: boolean) => {
+      setIsAllDay(checked);
+      form.setFieldValue('isAllDay', checked);
+      if (checked) {
+        form.setFieldValue('time', undefined);
+      }
+    },
+    [form]
+  );
 
   const handleSubmit = useCallback(async () => {
     try {
@@ -57,9 +78,10 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
       const appointmentData = {
         title: values.title,
         date: values.date.format('YYYY-MM-DD'),
-        time: values.time?.format('HH:mm'),
+        time: values.isAllDay ? undefined : values.time?.format('HH:mm'),
         category: values.category,
         description: values.description,
+        isAllDay: values.isAllDay,
       };
 
       if (isEditMode && appointment) {
@@ -70,13 +92,21 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
 
       onClose();
     } catch (error) {
-      // Validation failed
+      // Validation failed - fields will be marked as dirty
       console.log('Validation failed:', error);
     }
   }, [form, isEditMode, appointment, addAppointment, updateAppointment, onClose]);
 
+  const handleDelete = useCallback(() => {
+    if (appointment) {
+      deleteAppointment(appointment.id);
+      onClose();
+    }
+  }, [appointment, deleteAppointment, onClose]);
+
   const handleCancel = useCallback(() => {
     form.resetFields();
+    setIsAllDay(false);
     onClose();
   }, [form, onClose]);
 
@@ -90,6 +120,18 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
       width={480}
     >
       <Form form={form} layout="vertical" requiredMark="optional" style={{ marginTop: 16 }}>
+        {/* Offline Notice */}
+        {!isOnline && (
+          <Alert
+            type="info"
+            icon={<WifiOutlined />}
+            message="You're offline"
+            description="Your changes will be saved locally and synced when you're back online."
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+        )}
+
         <Form.Item
           name="title"
           label="Title"
@@ -108,10 +150,19 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
             <DatePicker style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item name="time" label="Time" style={{ flex: 1 }}>
-            <TimePicker format="HH:mm" style={{ width: '100%' }} />
-          </Form.Item>
+          {!isAllDay && (
+            <Form.Item name="time" label="Time" style={{ flex: 1 }}>
+              <TimePicker format="h:mm A" use12Hours style={{ width: '100%' }} />
+            </Form.Item>
+          )}
         </Flex>
+
+        <Form.Item name="isAllDay" valuePropName="checked" style={{ marginBottom: 16 }}>
+          <Flex align="center" gap={8}>
+            <Switch checked={isAllDay} onChange={handleAllDayChange} />
+            <span>All Day Event</span>
+          </Flex>
+        </Form.Item>
 
         <Form.Item
           name="category"
@@ -124,16 +175,32 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item name="description" label="Description">
-          <TextArea placeholder="Add a description (optional)" rows={3} />
+        <Form.Item name="description" label="Notes">
+          <TextArea placeholder="Add notes (optional)" rows={3} />
         </Form.Item>
 
         <Form.Item style={{ marginBottom: 0, marginTop: 24 }}>
-          <Flex justify="flex-end" gap={8}>
-            <Button onClick={handleCancel}>Cancel</Button>
-            <Button type="primary" onClick={handleSubmit}>
-              {isEditMode ? 'Save Changes' : 'Create Appointment'}
-            </Button>
+          <Flex justify={isEditMode ? 'space-between' : 'flex-end'} align="center">
+            {isEditMode && (
+              <Popconfirm
+                title="Delete Appointment"
+                description="Are you sure you want to delete this appointment?"
+                onConfirm={handleDelete}
+                okText="Delete"
+                cancelText="Cancel"
+                okButtonProps={{ danger: true }}
+              >
+                <Button danger icon={<DeleteOutlined />}>
+                  Delete
+                </Button>
+              </Popconfirm>
+            )}
+            <Flex gap={8}>
+              <Button onClick={handleCancel}>Cancel</Button>
+              <Button type="primary" onClick={handleSubmit}>
+                {isEditMode ? 'Save Changes' : 'Create Appointment'}
+              </Button>
+            </Flex>
           </Flex>
         </Form.Item>
       </Form>
