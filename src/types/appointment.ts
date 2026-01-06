@@ -40,8 +40,8 @@ export interface AppointmentFormValues {
 
 // Category color configuration
 export const CATEGORY_COLORS: Record<AppointmentCategory, string> = {
-  work: '#1677ff', // Blue
-  home: '#fa541c', // Orange
+  work: '#ff4d4f', // Red
+  home: '#1677ff', // Blue
 };
 
 export const CATEGORY_LABELS: Record<AppointmentCategory, string> = {

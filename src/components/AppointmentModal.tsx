@@ -15,7 +15,7 @@ import {
 import { DeleteOutlined, WifiOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useAppointmentStore } from '../store/appointmentStore';
-import type { Appointment, AppointmentCategory } from '../types/appointment';
+import { CATEGORY_COLORS, type Appointment, type AppointmentCategory } from '../types/appointment';
 
 const { TextArea } = Input;
 
@@ -178,8 +178,36 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
           rules={[{ required: true, message: 'Please select a category' }]}
         >
           <Radio.Group>
-            <Radio.Button value="work">Work</Radio.Button>
-            <Radio.Button value="home">Home</Radio.Button>
+            <Radio.Button value="work">
+              <Flex align="center" gap={6}>
+                <span
+                  className="category-color-dot"
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    backgroundColor: CATEGORY_COLORS.work,
+                    display: 'inline-block',
+                  }}
+                />
+                Work
+              </Flex>
+            </Radio.Button>
+            <Radio.Button value="home">
+              <Flex align="center" gap={6}>
+                <span
+                  className="category-color-dot"
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    backgroundColor: CATEGORY_COLORS.home,
+                    display: 'inline-block',
+                  }}
+                />
+                Home
+              </Flex>
+            </Radio.Button>
           </Radio.Group>
         </Form.Item>
 
