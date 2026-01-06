@@ -123,13 +123,37 @@
   border-style: dashed;
 }
 
+/* Appointment Item Styles (in calendar cells) */
+.appointment-item {
+  transition: background-color 0.15s ease;
+}
+
+.appointment-item:hover {
+  filter: brightness(0.95);
+}
+
+.appointment-item:focus {
+  outline: 2px solid var(--ant-color-primary);
+  outline-offset: 1px;
+}
+
+.appointment-item--pending {
+  opacity: 0.7;
+}
+
+.appointment-list {
+  max-height: 70px;
+  overflow: hidden;
+}
+
 /* Appointment Dot Styles */
 .appointment-dot {
   transition: transform 0.15s ease;
+  flex-shrink: 0;
 }
 
-.appointment-dot:hover {
-  transform: scale(1.5);
+.appointment-item:hover .appointment-dot {
+  transform: scale(1.2);
 }
 
 .appointment-dot:focus {
