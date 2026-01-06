@@ -6,6 +6,8 @@ import { AppointmentCalendar } from './AppointmentCalendar';
 import { AppointmentLegend } from './AppointmentLegend';
 import { AppointmentModal } from './AppointmentModal';
 import { PlannerView } from './PlannerView';
+import { OfflineBanner } from './OfflineBanner';
+import { SyncStatusIndicator } from './SyncStatusIndicator';
 import type { CalendarViewMode, AppointmentCategory, Appointment } from '../types/appointment';
 import '../App.css';
 
@@ -81,6 +83,9 @@ export function CalendarPage() {
 
   return (
     <div className="calendar-page">
+      {/* Offline Banner */}
+      <OfflineBanner />
+
       {/* Top Controls Row */}
       <Flex justify="space-between" align="center" style={{ marginBottom: 24 }}>
         <Flex gap={8} align="center">
@@ -149,6 +154,9 @@ export function CalendarPage() {
         onClose={handleModalClose}
         appointment={editingAppointment}
       />
+
+      {/* Sync Status Indicator */}
+      <SyncStatusIndicator />
     </div>
   );
 }
