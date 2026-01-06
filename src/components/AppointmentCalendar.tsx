@@ -4,14 +4,18 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { useAppointmentStore } from '../store/appointmentStore';
-import { CATEGORY_COLORS } from '../types/appointment';
+import { CATEGORY_COLORS, type Appointment } from '../types/appointment';
 
 interface CellRenderInfo {
   type: string;
   originNode: React.ReactNode;
 }
 
-export function AppointmentCalendar() {
+interface AppointmentCalendarProps {
+  onEditAppointment: (appointment: Appointment) => void;
+}
+
+export function AppointmentCalendar({ onEditAppointment }: AppointmentCalendarProps) {
   const { getAppointmentsByDate, selectedDate, setSelectedDate, viewMode } = useAppointmentStore();
 
   const currentValue = useMemo(() => {
@@ -32,6 +36,27 @@ export function AppointmentCalendar() {
     [setSelectedDate]
   );
 
+  // Handle clicking on an appointment dot
+  const handleAppointmentClick = useCallback(
+    (e: React.MouseEvent, appointment: Appointment) => {
+      e.stopPropagation();
+      onEditAppointment(appointment);
+    },
+    [onEditAppointment]
+  );
+
+  // Handle keyboard interaction on appointment dot
+  const handleAppointmentKeyDown = useCallback(
+    (e: React.KeyboardEvent, appointment: Appointment) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        onEditAppointment(appointment);
+      }
+    },
+    [onEditAppointment]
+  );
+
   // Custom cell renderer to show appointment indicators
   const cellRender = useCallback(
     (date: Dayjs, info: CellRenderInfo): React.ReactNode => {
@@ -46,36 +71,50 @@ export function AppointmentCalendar() {
         return null;
       }
 
-      // Group by category and show dots
-      const workCount = appointments.filter((a) => a.category === 'work').length;
-      const homeCount = appointments.filter((a) => a.category === 'home').length;
+      // Group by category
+      const workAppointments = appointments.filter((a) => a.category === 'work');
+      const homeAppointments = appointments.filter((a) => a.category === 'home');
 
       return (
         <Flex gap={2} justify="center" style={{ marginTop: 4 }}>
-          {workCount > 0 && (
+          {workAppointments.length > 0 && (
             <span
+              role="button"
+              tabIndex={0}
+              aria-label={`${workAppointments.length} work appointment(s) on ${dateStr}`}
+              onClick={(e) => handleAppointmentClick(e, workAppointments[0])}
+              onKeyDown={(e) => handleAppointmentKeyDown(e, workAppointments[0])}
+              className={`appointment-dot ${workAppointments.some((a) => a.syncStatus === 'pending') ? 'appointment-dot--pending' : ''}`}
               style={{
                 width: 6,
                 height: 6,
                 borderRadius: '50%',
                 backgroundColor: CATEGORY_COLORS.work,
+                cursor: 'pointer',
               }}
             />
           )}
-          {homeCount > 0 && (
+          {homeAppointments.length > 0 && (
             <span
+              role="button"
+              tabIndex={0}
+              aria-label={`${homeAppointments.length} home appointment(s) on ${dateStr}`}
+              onClick={(e) => handleAppointmentClick(e, homeAppointments[0])}
+              onKeyDown={(e) => handleAppointmentKeyDown(e, homeAppointments[0])}
+              className={`appointment-dot ${homeAppointments.some((a) => a.syncStatus === 'pending') ? 'appointment-dot--pending' : ''}`}
               style={{
                 width: 6,
                 height: 6,
                 borderRadius: '50%',
                 backgroundColor: CATEGORY_COLORS.home,
+                cursor: 'pointer',
               }}
             />
           )}
         </Flex>
       );
     },
-    [getAppointmentsByDate]
+    [getAppointmentsByDate, handleAppointmentClick, handleAppointmentKeyDown]
   );
 
   // Custom header renderer
