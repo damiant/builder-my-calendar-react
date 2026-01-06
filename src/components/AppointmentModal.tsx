@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Modal, Form, Input, DatePicker, TimePicker, Radio, Button, Flex, Switch, Alert, Popconfirm } from 'antd';
 import { DeleteOutlined, WifiOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
@@ -27,7 +27,8 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
   const { addAppointment, updateAppointment, deleteAppointment, selectedDate, isOnline } =
     useAppointmentStore();
 
-  const [isAllDay, setIsAllDay] = useState(false);
+  // Watch the isAllDay field to control time picker visibility
+  const isAllDay = Form.useWatch('isAllDay', form) ?? false;
   const isEditMode = !!appointment;
 
   // Reset form when modal opens/closes
@@ -36,7 +37,6 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
       if (appointment) {
         // Edit mode: populate form with existing data
         const allDay = appointment.isAllDay ?? false;
-        setIsAllDay(allDay);
         form.setFieldsValue({
           title: appointment.title,
           date: dayjs(appointment.date),
@@ -47,7 +47,6 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
         });
       } else {
         // Create mode: set defaults
-        setIsAllDay(false);
         form.setFieldsValue({
           date: selectedDate ? dayjs(selectedDate) : dayjs(),
           category: 'work',
@@ -56,13 +55,11 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
       }
     } else {
       form.resetFields();
-      setIsAllDay(false);
     }
   }, [open, appointment, selectedDate, form]);
 
   const handleAllDayChange = useCallback(
     (checked: boolean) => {
-      setIsAllDay(checked);
       form.setFieldValue('isAllDay', checked);
       if (checked) {
         form.setFieldValue('time', undefined);
@@ -106,7 +103,6 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
 
   const handleCancel = useCallback(() => {
     form.resetFields();
-    setIsAllDay(false);
     onClose();
   }, [form, onClose]);
 
