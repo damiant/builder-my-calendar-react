@@ -32,6 +32,9 @@ const initialAppointments: Appointment[] = [
     time: '10:00',
     category: 'work',
     description: 'Weekly team sync',
+    isAllDay: false,
+    syncStatus: 'synced',
+    updatedAt: new Date().toISOString(),
   },
   {
     id: 'apt-2',
@@ -40,6 +43,9 @@ const initialAppointments: Appointment[] = [
     time: '19:00',
     category: 'home',
     description: 'At the Italian restaurant',
+    isAllDay: false,
+    syncStatus: 'synced',
+    updatedAt: new Date().toISOString(),
   },
   {
     id: 'apt-3',
@@ -48,6 +54,9 @@ const initialAppointments: Appointment[] = [
     time: '07:00',
     category: 'home',
     description: 'Morning workout',
+    isAllDay: false,
+    syncStatus: 'synced',
+    updatedAt: new Date().toISOString(),
   },
   {
     id: 'apt-4',
@@ -56,6 +65,9 @@ const initialAppointments: Appointment[] = [
     time: '17:00',
     category: 'work',
     description: 'Submit Q1 report',
+    isAllDay: false,
+    syncStatus: 'synced',
+    updatedAt: new Date().toISOString(),
   },
   {
     id: 'apt-5',
@@ -64,6 +76,9 @@ const initialAppointments: Appointment[] = [
     time: '14:00',
     category: 'home',
     description: 'Annual checkup',
+    isAllDay: false,
+    syncStatus: 'synced',
+    updatedAt: new Date().toISOString(),
   },
   {
     id: 'apt-6',
@@ -72,6 +87,9 @@ const initialAppointments: Appointment[] = [
     time: '11:00',
     category: 'work',
     description: 'Q1 roadmap review',
+    isAllDay: false,
+    syncStatus: 'synced',
+    updatedAt: new Date().toISOString(),
   },
 ];
 
