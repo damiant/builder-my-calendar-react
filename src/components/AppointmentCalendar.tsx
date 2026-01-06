@@ -1,17 +1,27 @@
 import { useCallback, useMemo } from 'react';
-import { Calendar, Select, Flex, Button } from 'antd';
+import { Calendar, Select, Flex, Button, Typography } from 'antd';
+
+const { Text } = Typography;
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { useAppointmentStore } from '../store/appointmentStore';
-import { CATEGORY_COLORS } from '../types/appointment';
+import { CATEGORY_COLORS, type Appointment } from '../types/appointment';
 
 interface CellRenderInfo {
   type: string;
   originNode: React.ReactNode;
 }
 
-export function AppointmentCalendar() {
+interface AppointmentCalendarProps {
+  onEditAppointment: (appointment: Appointment) => void;
+  onNewAppointment: () => void;
+}
+
+export function AppointmentCalendar({
+  onEditAppointment,
+  onNewAppointment,
+}: AppointmentCalendarProps) {
   const { getAppointmentsByDate, selectedDate, setSelectedDate, viewMode } = useAppointmentStore();
 
   const currentValue = useMemo(() => {
@@ -20,9 +30,15 @@ export function AppointmentCalendar() {
 
   const handleSelect = useCallback(
     (date: Dayjs) => {
-      setSelectedDate(date.format('YYYY-MM-DD'));
+      const dateStr = date.format('YYYY-MM-DD');
+      // If clicking the already-selected date, open new appointment dialog
+      if (selectedDate === dateStr) {
+        onNewAppointment();
+      } else {
+        setSelectedDate(dateStr);
+      }
     },
-    [setSelectedDate]
+    [selectedDate, setSelectedDate, onNewAppointment]
   );
 
   const handlePanelChange = useCallback(
@@ -32,7 +48,28 @@ export function AppointmentCalendar() {
     [setSelectedDate]
   );
 
-  // Custom cell renderer to show appointment indicators
+  // Handle clicking on an appointment dot
+  const handleAppointmentClick = useCallback(
+    (e: React.MouseEvent, appointment: Appointment) => {
+      e.stopPropagation();
+      onEditAppointment(appointment);
+    },
+    [onEditAppointment]
+  );
+
+  // Handle keyboard interaction on appointment dot
+  const handleAppointmentKeyDown = useCallback(
+    (e: React.KeyboardEvent, appointment: Appointment) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        onEditAppointment(appointment);
+      }
+    },
+    [onEditAppointment]
+  );
+
+  // Custom cell renderer to show appointment indicators with titles
   const cellRender = useCallback(
     (date: Dayjs, info: CellRenderInfo): React.ReactNode => {
       if (info.type !== 'date') {
@@ -46,36 +83,76 @@ export function AppointmentCalendar() {
         return null;
       }
 
-      // Group by category and show dots
-      const workCount = appointments.filter((a) => a.category === 'work').length;
-      const homeCount = appointments.filter((a) => a.category === 'home').length;
+      // Sort appointments: all-day first, then by time
+      const sortedAppointments = [...appointments].sort((a, b) => {
+        if (a.isAllDay && !b.isAllDay) return -1;
+        if (!a.isAllDay && b.isAllDay) return 1;
+        return (a.time || '').localeCompare(b.time || '');
+      });
+
+      // Limit to 3 appointments to fit in the cell
+      const visibleAppointments = sortedAppointments.slice(0, 3);
+      const remainingCount = sortedAppointments.length - visibleAppointments.length;
 
       return (
-        <Flex gap={2} justify="center" style={{ marginTop: 4 }}>
-          {workCount > 0 && (
-            <span
+        <Flex vertical gap={2} className="appointment-list" style={{ marginTop: 2 }}>
+          {visibleAppointments.map((appointment) => (
+            <Flex
+              key={appointment.id}
+              role="button"
+              tabIndex={0}
+              aria-label={`${appointment.title} - ${appointment.category}`}
+              onClick={(e) => handleAppointmentClick(e, appointment)}
+              onKeyDown={(e) => handleAppointmentKeyDown(e, appointment)}
+              className={`appointment-item ${appointment.syncStatus === 'pending' ? 'appointment-item--pending' : ''}`}
+              align="center"
+              gap={4}
               style={{
-                width: 6,
-                height: 6,
-                borderRadius: '50%',
-                backgroundColor: CATEGORY_COLORS.work,
+                cursor: 'pointer',
+                padding: '1px 4px',
+                borderRadius: 3,
+                backgroundColor: `${CATEGORY_COLORS[appointment.category]}15`,
+                overflow: 'hidden',
               }}
-            />
-          )}
-          {homeCount > 0 && (
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: '50%',
-                backgroundColor: CATEGORY_COLORS.home,
+            >
+              <span
+                className="appointment-dot"
+                style={{
+                  width: 6,
+                  height: 6,
+                  minWidth: 6,
+                  borderRadius: '50%',
+                  backgroundColor: CATEGORY_COLORS[appointment.category],
+                }}
+              />
+              <Text
+                ellipsis
+                style={{
+                  fontSize: 11,
+                  lineHeight: '14px',
+                  color: 'var(--ant-color-text)',
+                }}
+              >
+                {appointment.title}
+              </Text>
+            </Flex>
+          ))}
+          {remainingCount > 0 && (
+            <Text
+              type="secondary"
+              style={{ fontSize: 10, textAlign: 'center', cursor: 'pointer' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAppointmentClick(e as unknown as React.MouseEvent, sortedAppointments[3]);
               }}
-            />
+            >
+              +{remainingCount} more
+            </Text>
           )}
         </Flex>
       );
     },
-    [getAppointmentsByDate]
+    [getAppointmentsByDate, handleAppointmentClick, handleAppointmentKeyDown]
   );
 
   // Custom header renderer
