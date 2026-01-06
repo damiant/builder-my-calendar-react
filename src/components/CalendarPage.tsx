@@ -138,7 +138,10 @@ export function CalendarPage() {
       {viewMode === 'planner' ? (
         <PlannerView onEditAppointment={handleEditAppointment} />
       ) : (
-        <AppointmentCalendar onEditAppointment={handleEditAppointment} />
+        <AppointmentCalendar
+          onEditAppointment={handleEditAppointment}
+          onNewAppointment={handleNewAppointment}
+        />
       )}
 
       {/* Add/Edit Modal */}
