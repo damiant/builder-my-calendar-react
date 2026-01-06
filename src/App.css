@@ -93,3 +93,100 @@
 .filter-tag:not(.active) {
   opacity: 0.6;
 }
+
+/* Planner View Styles */
+.planner-view {
+  padding: var(--spacing-md) 0;
+}
+
+.planner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+/* Appointment Card Styles */
+.appointment-card {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-2px);
+}
+
+.appointment-card:focus {
+  outline: 2px solid var(--ant-color-primary);
+  outline-offset: 2px;
+}
+
+.appointment-card--pending {
+  border-style: dashed;
+}
+
+/* Appointment Dot Styles */
+.appointment-dot {
+  transition: transform 0.15s ease;
+}
+
+.appointment-dot:hover {
+  transform: scale(1.5);
+}
+
+.appointment-dot:focus {
+  outline: 2px solid var(--ant-color-primary);
+  outline-offset: 2px;
+}
+
+.appointment-dot--pending {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Offline Banner Styles */
+.offline-banner {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Sync Status Indicator Styles */
+.sync-status-indicator {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 1000;
+}
+
+.sync-status-indicator .ant-badge {
+  cursor: default;
+}
+
+.sync-icon-spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
