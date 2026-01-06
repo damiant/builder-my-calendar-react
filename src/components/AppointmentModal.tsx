@@ -15,7 +15,7 @@ import {
 import { DeleteOutlined, WifiOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { useAppointmentStore } from '../store/appointmentStore';
-import type { Appointment, AppointmentCategory } from '../types/appointment';
+import { CATEGORY_COLORS, type Appointment, type AppointmentCategory } from '../types/appointment';
 
 const { TextArea } = Input;
 
