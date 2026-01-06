@@ -15,9 +15,10 @@ interface CellRenderInfo {
 
 interface AppointmentCalendarProps {
   onEditAppointment: (appointment: Appointment) => void;
+  onNewAppointment: () => void;
 }
 
-export function AppointmentCalendar({ onEditAppointment }: AppointmentCalendarProps) {
+export function AppointmentCalendar({ onEditAppointment, onNewAppointment }: AppointmentCalendarProps) {
   const { getAppointmentsByDate, selectedDate, setSelectedDate, viewMode } = useAppointmentStore();
 
   const currentValue = useMemo(() => {
@@ -26,9 +27,15 @@ export function AppointmentCalendar({ onEditAppointment }: AppointmentCalendarPr
 
   const handleSelect = useCallback(
     (date: Dayjs) => {
-      setSelectedDate(date.format('YYYY-MM-DD'));
+      const dateStr = date.format('YYYY-MM-DD');
+      // If clicking the already-selected date, open new appointment dialog
+      if (selectedDate === dateStr) {
+        onNewAppointment();
+      } else {
+        setSelectedDate(dateStr);
+      }
     },
-    [setSelectedDate]
+    [selectedDate, setSelectedDate, onNewAppointment]
   );
 
   const handlePanelChange = useCallback(
