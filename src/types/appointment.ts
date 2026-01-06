@@ -1,5 +1,18 @@
 export type AppointmentCategory = 'work' | 'home';
 
+export type SyncStatus = 'synced' | 'pending';
+
+export type OperationType = 'create' | 'update' | 'delete';
+
+export interface SyncOperation {
+  id: string;
+  operationType: OperationType;
+  appointmentId: string;
+  data?: Omit<Appointment, 'id'>;
+  timestamp: number;
+  retryCount: number;
+}
+
 export interface Appointment {
   id: string;
   title: string;
@@ -7,6 +20,9 @@ export interface Appointment {
   time?: string; // HH:mm format
   category: AppointmentCategory;
   description?: string;
+  isAllDay: boolean;
+  syncStatus: SyncStatus;
+  updatedAt: string; // ISO timestamp
 }
 
 export type CategoryFilter = AppointmentCategory | 'all';
@@ -19,6 +35,7 @@ export interface AppointmentFormValues {
   time?: string;
   category: AppointmentCategory;
   description?: string;
+  isAllDay: boolean;
 }
 
 // Category color configuration
