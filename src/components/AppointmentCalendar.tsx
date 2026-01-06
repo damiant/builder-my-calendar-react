@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
-import { Calendar, Select, Flex, Button } from 'antd';
+import { Calendar, Select, Flex, Button, Typography } from 'antd';
+
+const { Text } = Typography;
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
@@ -57,7 +59,7 @@ export function AppointmentCalendar({ onEditAppointment }: AppointmentCalendarPr
     [onEditAppointment]
   );
 
-  // Custom cell renderer to show appointment indicators
+  // Custom cell renderer to show appointment indicators with titles
   const cellRender = useCallback(
     (date: Dayjs, info: CellRenderInfo): React.ReactNode => {
       if (info.type !== 'date') {
@@ -71,45 +73,71 @@ export function AppointmentCalendar({ onEditAppointment }: AppointmentCalendarPr
         return null;
       }
 
-      // Group by category
-      const workAppointments = appointments.filter((a) => a.category === 'work');
-      const homeAppointments = appointments.filter((a) => a.category === 'home');
+      // Sort appointments: all-day first, then by time
+      const sortedAppointments = [...appointments].sort((a, b) => {
+        if (a.isAllDay && !b.isAllDay) return -1;
+        if (!a.isAllDay && b.isAllDay) return 1;
+        return (a.time || '').localeCompare(b.time || '');
+      });
+
+      // Limit to 3 appointments to fit in the cell
+      const visibleAppointments = sortedAppointments.slice(0, 3);
+      const remainingCount = sortedAppointments.length - visibleAppointments.length;
 
       return (
-        <Flex gap={2} justify="center" style={{ marginTop: 4 }}>
-          {workAppointments.length > 0 && (
-            <span
+        <Flex vertical gap={2} className="appointment-list" style={{ marginTop: 2 }}>
+          {visibleAppointments.map((appointment) => (
+            <Flex
+              key={appointment.id}
               role="button"
               tabIndex={0}
-              aria-label={`${workAppointments.length} work appointment(s) on ${dateStr}`}
-              onClick={(e) => handleAppointmentClick(e, workAppointments[0])}
-              onKeyDown={(e) => handleAppointmentKeyDown(e, workAppointments[0])}
-              className={`appointment-dot ${workAppointments.some((a) => a.syncStatus === 'pending') ? 'appointment-dot--pending' : ''}`}
+              aria-label={`${appointment.title} - ${appointment.category}`}
+              onClick={(e) => handleAppointmentClick(e, appointment)}
+              onKeyDown={(e) => handleAppointmentKeyDown(e, appointment)}
+              className={`appointment-item ${appointment.syncStatus === 'pending' ? 'appointment-item--pending' : ''}`}
+              align="center"
+              gap={4}
               style={{
-                width: 6,
-                height: 6,
-                borderRadius: '50%',
-                backgroundColor: CATEGORY_COLORS.work,
                 cursor: 'pointer',
+                padding: '1px 4px',
+                borderRadius: 3,
+                backgroundColor: `${CATEGORY_COLORS[appointment.category]}15`,
+                overflow: 'hidden',
               }}
-            />
-          )}
-          {homeAppointments.length > 0 && (
-            <span
-              role="button"
-              tabIndex={0}
-              aria-label={`${homeAppointments.length} home appointment(s) on ${dateStr}`}
-              onClick={(e) => handleAppointmentClick(e, homeAppointments[0])}
-              onKeyDown={(e) => handleAppointmentKeyDown(e, homeAppointments[0])}
-              className={`appointment-dot ${homeAppointments.some((a) => a.syncStatus === 'pending') ? 'appointment-dot--pending' : ''}`}
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: '50%',
-                backgroundColor: CATEGORY_COLORS.home,
-                cursor: 'pointer',
+            >
+              <span
+                className="appointment-dot"
+                style={{
+                  width: 6,
+                  height: 6,
+                  minWidth: 6,
+                  borderRadius: '50%',
+                  backgroundColor: CATEGORY_COLORS[appointment.category],
+                }}
+              />
+              <Text
+                ellipsis
+                style={{
+                  fontSize: 11,
+                  lineHeight: '14px',
+                  color: 'var(--ant-color-text)',
+                }}
+              >
+                {appointment.title}
+              </Text>
+            </Flex>
+          ))}
+          {remainingCount > 0 && (
+            <Text
+              type="secondary"
+              style={{ fontSize: 10, textAlign: 'center', cursor: 'pointer' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAppointmentClick(e as unknown as React.MouseEvent, sortedAppointments[3]);
               }}
-            />
+            >
+              +{remainingCount} more
+            </Text>
           )}
         </Flex>
       );
