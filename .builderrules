@@ -1,0 +1,1 @@
+- convert any hardcoded px values when applying a visual design to design tokens found in the design system 'ng-zoro'
