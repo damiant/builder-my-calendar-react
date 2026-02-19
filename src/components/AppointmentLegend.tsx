@@ -42,26 +42,17 @@ export function AppointmentLegend() {
       gap={24}
       wrap="wrap"
       justify="center"
-      style={{
-        padding: '12px 16px',
-        backgroundColor: '#fafafa',
-        borderRadius: 6,
-        marginTop: -1,
-        borderTop: '1px solid #f0f0f0',
-      }}
+      className="legend-container"
     >
       {legendItems.map((item) => (
         <Flex key={item.id} gap={6} align="center">
           <span
+            className="category-dot"
             style={{
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
               backgroundColor: CATEGORY_COLORS[item.category],
-              flexShrink: 0,
             }}
           />
-          <span style={{ fontSize: 13, color: '#374151' }}>{item.title}</span>
+          <span className="legend-item-text">{item.title}</span>
         </Flex>
       ))}
     </Flex>

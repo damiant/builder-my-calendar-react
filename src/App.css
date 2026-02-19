@@ -99,6 +99,10 @@
   padding: var(--spacing-md) 0;
 }
 
+.planner-empty-state {
+  padding: 48px var(--spacing-lg);
+}
+
 .planner-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -216,4 +220,217 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Category Color Dots */
+.category-dot {
+  width: var(--dot-size-md);
+  height: var(--dot-size-md);
+  border-radius: var(--border-radius-circle);
+  flex-shrink: 0;
+}
+
+.category-dot-sm {
+  width: var(--dot-size-sm);
+  height: var(--dot-size-sm);
+  border-radius: var(--border-radius-circle);
+  min-width: var(--dot-size-sm);
+}
+
+/* Modal Spacing */
+.modal-alert {
+  margin-bottom: var(--spacing-md);
+}
+
+.modal-form-footer {
+  margin-bottom: 0;
+  margin-top: var(--spacing-lg);
+}
+
+.modal-all-day-toggle {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Form Field Sizing */
+.form-field-flex {
+  flex: 1;
+}
+
+.form-field-full-width {
+  width: 100%;
+}
+
+/* Card Border */
+.card-category-border {
+  border-left-width: var(--color-border-category);
+  border-left-style: solid;
+}
+
+.card-pending-opacity {
+  opacity: var(--opacity-pending);
+}
+
+/* Text Sizes */
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+}
+
+.text-md {
+  font-size: var(--font-size-md);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+}
+
+/* Text Alignments and Transforms */
+.text-center {
+  text-align: center;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+/* Empty State Text */
+.empty-title {
+  font-size: var(--font-size-xl);
+  color: var(--ant-color-text-secondary);
+}
+
+.empty-description {
+  font-size: var(--font-size-lg);
+  color: var(--ant-color-text-tertiary);
+}
+
+/* Icon Sizing */
+.icon-large {
+  font-size: var(--font-size-icon-lg);
+  color: var(--ant-color-text-quaternary);
+}
+
+/* Loading States */
+.loading-container {
+  min-height: var(--min-height-loading);
+}
+
+.page-loading-container {
+  min-height: var(--min-height-page);
+}
+
+/* Calendar Cell Appointments */
+.calendar-appointments-wrapper {
+  margin-top: 2px;
+}
+
+.calendar-appointment-item {
+  cursor: pointer;
+  padding: 1px 4px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+}
+
+.calendar-appointment-text {
+  font-size: var(--font-size-sm);
+  line-height: 14px;
+  color: var(--ant-color-text);
+}
+
+.calendar-more-text {
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+/* Legend */
+.legend-container {
+  padding: 12px var(--spacing-md);
+  background-color: #fafafa;
+  border-radius: var(--border-radius-lg);
+  margin-top: -1px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.legend-item-text {
+  font-size: var(--font-size-md);
+  color: var(--color-text-gray);
+}
+
+/* Card Text Ellipsis */
+.card-description-ellipsis {
+  font-size: var(--font-size-md);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-day-text {
+  font-size: var(--font-size-md);
+}
+
+.card-time-text {
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  color: var(--ant-color-text);
+}
+
+.card-title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+
+.card-category-text {
+  font-size: var(--font-size-base);
+}
+
+.card-pending-text {
+  font-size: var(--font-size-sm);
+}
+
+.card-footer-spacing {
+  margin-top: var(--spacing-xs);
+}
+
+/* Button Styles */
+.button-reschedule {
+  padding: 0;
+  height: auto;
+}
+
+/* Select Sizing */
+.select-sm {
+  width: var(--select-width-sm);
+}
+
+.select-md {
+  width: var(--select-width-md);
+}
+
+/* Top Controls */
+.top-controls-wrapper {
+  margin-bottom: var(--spacing-lg);
+}
+
+.filter-tag-no-margin {
+  margin: 0;
+}
+
+/* Offline Banner */
+.offline-banner-spacing {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Sync Status Indicator */
+.sync-button-style {
+  background-color: var(--ant-color-bg-container);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--ant-color-border);
 }

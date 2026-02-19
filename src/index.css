@@ -8,6 +8,37 @@
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
+
+  /* Size variables */
+  --dot-size-sm: 6px;
+  --dot-size-md: 8px;
+  --select-width-sm: 80px;
+  --select-width-md: 100px;
+  --border-radius-sm: 3px;
+  --border-radius-md: 4px;
+  --border-radius-lg: 6px;
+  --border-radius-xl: 8px;
+  --border-radius-circle: 50%;
+
+  /* Font sizes */
+  --font-size-xs: 10px;
+  --font-size-sm: 11px;
+  --font-size-base: 12px;
+  --font-size-md: 13px;
+  --font-size-lg: 14px;
+  --font-size-xl: 16px;
+  --font-size-icon-lg: 64px;
+
+  /* Min heights */
+  --min-height-loading: 300px;
+  --min-height-page: 50vh;
+
+  /* Opacity */
+  --opacity-pending: 0.85;
+
+  /* Additional colors */
+  --color-text-gray: #374151;
+  --color-border-category: 4px;
 }
 
 * {

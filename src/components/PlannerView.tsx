@@ -35,7 +35,7 @@ export function PlannerView({ onEditAppointment }: PlannerViewProps) {
 
   if (isLoading) {
     return (
-      <Flex justify="center" align="center" style={{ minHeight: 300 }}>
+      <Flex justify="center" align="center" className="loading-container">
         <Spin size="large" />
       </Flex>
     );
@@ -45,19 +45,19 @@ export function PlannerView({ onEditAppointment }: PlannerViewProps) {
     return (
       <Empty
         image={
-          <CalendarOutlined style={{ fontSize: 64, color: 'var(--ant-color-text-quaternary)' }} />
+          <CalendarOutlined className="icon-large" />
         }
         description={
           <Flex vertical align="center" gap={4}>
-            <span style={{ fontSize: 16, color: 'var(--ant-color-text-secondary)' }}>
+            <span className="empty-title">
               No appointments yet
             </span>
-            <span style={{ fontSize: 14, color: 'var(--ant-color-text-tertiary)' }}>
+            <span className="empty-description">
               Click "New Appointment" to create your first appointment
             </span>
           </Flex>
         }
-        style={{ padding: '48px 24px' }}
+        className="planner-empty-state"
       />
     );
   }
