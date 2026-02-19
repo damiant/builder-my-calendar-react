@@ -95,7 +95,7 @@ export function AppointmentCalendar({
       const remainingCount = sortedAppointments.length - visibleAppointments.length;
 
       return (
-        <Flex vertical gap={2} className="appointment-list" style={{ marginTop: 2 }}>
+        <Flex vertical gap={2} className="appointment-list calendar-appointments-wrapper">
           {visibleAppointments.map((appointment) => (
             <Flex
               key={appointment.id}
@@ -104,34 +104,22 @@ export function AppointmentCalendar({
               aria-label={`${appointment.title} - ${appointment.category}`}
               onClick={(e) => handleAppointmentClick(e, appointment)}
               onKeyDown={(e) => handleAppointmentKeyDown(e, appointment)}
-              className={`appointment-item ${appointment.syncStatus === 'pending' ? 'appointment-item--pending' : ''}`}
+              className={`appointment-item calendar-appointment-item ${appointment.syncStatus === 'pending' ? 'appointment-item--pending' : ''}`}
               align="center"
               gap={4}
               style={{
-                cursor: 'pointer',
-                padding: '1px 4px',
-                borderRadius: 3,
                 backgroundColor: `${CATEGORY_COLORS[appointment.category]}15`,
-                overflow: 'hidden',
               }}
             >
               <span
-                className="appointment-dot"
+                className="appointment-dot category-dot-sm"
                 style={{
-                  width: 6,
-                  height: 6,
-                  minWidth: 6,
-                  borderRadius: '50%',
                   backgroundColor: CATEGORY_COLORS[appointment.category],
                 }}
               />
               <Text
                 ellipsis
-                style={{
-                  fontSize: 11,
-                  lineHeight: '14px',
-                  color: 'var(--ant-color-text)',
-                }}
+                className="calendar-appointment-text"
               >
                 {appointment.title}
               </Text>
@@ -140,7 +128,7 @@ export function AppointmentCalendar({
           {remainingCount > 0 && (
             <Text
               type="secondary"
-              style={{ fontSize: 10, textAlign: 'center', cursor: 'pointer' }}
+              className="calendar-more-text text-center"
               onClick={(e) => {
                 e.stopPropagation();
                 handleAppointmentClick(e as unknown as React.MouseEvent, sortedAppointments[3]);
@@ -204,7 +192,7 @@ export function AppointmentCalendar({
               value={year}
               onChange={handleYearChange}
               options={yearOptions}
-              style={{ width: 80 }}
+              className="select-sm"
               variant="outlined"
               size="small"
             />
@@ -212,7 +200,7 @@ export function AppointmentCalendar({
               value={month}
               onChange={handleMonthChange}
               options={monthOptions}
-              style={{ width: 80 }}
+              className="select-sm"
               variant="outlined"
               size="small"
             />

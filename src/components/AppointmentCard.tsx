@@ -49,7 +49,7 @@ export function AppointmentCard({ appointment, onEdit }: AppointmentCardProps) {
 
   return (
     <Card
-      className={`appointment-card ${isPending ? 'appointment-card--pending' : ''}`}
+      className={`appointment-card card-category-border ${isPending ? 'appointment-card--pending card-pending-opacity' : ''}`}
       hoverable
       onClick={handleClick}
       onKeyDown={handleKeyDown}
@@ -57,62 +57,47 @@ export function AppointmentCard({ appointment, onEdit }: AppointmentCardProps) {
       tabIndex={0}
       aria-label={`${appointment.title} on ${displayDate} at ${displayTime}`}
       style={{
-        borderLeft: `4px solid ${categoryColor}`,
-        opacity: isPending ? 0.85 : 1,
+        borderLeftColor: categoryColor,
       }}
     >
       <Flex vertical gap={8}>
         {/* Day and Time */}
         <Flex justify="space-between" align="center">
-          <Text type="secondary" style={{ fontSize: 13 }}>
+          <Text type="secondary" className="card-day-text">
             {dayOfWeek}
           </Text>
-          <Text
-            style={{
-              fontSize: 13,
-              fontWeight: 500,
-              color: 'var(--ant-color-text)',
-            }}
-          >
+          <Text className="card-time-text">
             {displayTime}
           </Text>
         </Flex>
 
         {/* Title */}
-        <Title level={5} style={{ margin: 0, fontSize: 16 }}>
+        <Title level={5} className="card-title">
           {appointment.title}
         </Title>
 
         {/* Notes */}
         <Text
           type="secondary"
-          style={{
-            fontSize: 13,
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-          }}
+          className="card-description-ellipsis"
         >
           {appointment.description || 'No notes'}
         </Text>
 
         {/* Footer with category dot and reschedule button */}
-        <Flex justify="space-between" align="center" style={{ marginTop: 4 }}>
+        <Flex justify="space-between" align="center" className="card-footer-spacing">
           <Flex align="center" gap={6}>
             <span
+              className="category-dot"
               style={{
-                width: 8,
-                height: 8,
-                borderRadius: '50%',
                 backgroundColor: categoryColor,
               }}
             />
-            <Text type="secondary" style={{ fontSize: 12, textTransform: 'capitalize' }}>
+            <Text type="secondary" className="card-category-text text-capitalize">
               {appointment.category}
             </Text>
             {isPending && (
-              <Text type="warning" style={{ fontSize: 11 }}>
+              <Text type="warning" className="card-pending-text">
                 • Pending sync
               </Text>
             )}
@@ -123,7 +108,7 @@ export function AppointmentCard({ appointment, onEdit }: AppointmentCardProps) {
             size="small"
             icon={<CalendarOutlined />}
             onClick={handleReschedule}
-            style={{ padding: 0, height: 'auto' }}
+            className="button-reschedule"
           >
             Reschedule
           </Button>

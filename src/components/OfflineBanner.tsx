@@ -17,7 +17,7 @@ export function OfflineBanner() {
       : "You're offline";
 
   return (
-    <div className="offline-banner" style={{ marginBottom: 16 }}>
+    <div className="offline-banner offline-banner-spacing">
       <Alert
         type="warning"
         icon={<WifiOutlined />}

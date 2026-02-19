@@ -136,7 +136,7 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
             message="You're offline"
             description="Your changes will be saved locally and synced when you're back online."
             showIcon
-            style={{ marginBottom: 16 }}
+            className="modal-alert"
           />
         )}
 
@@ -153,19 +153,19 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
             name="date"
             label="Date"
             rules={[{ required: true, message: 'Please select a date' }]}
-            style={{ flex: 1 }}
+            className="form-field-flex"
           >
-            <DatePicker style={{ width: '100%' }} />
+            <DatePicker className="form-field-full-width" />
           </Form.Item>
 
           {!isAllDay && (
-            <Form.Item name="time" label="Time" style={{ flex: 1 }}>
-              <TimePicker format="h:mm A" use12Hours style={{ width: '100%' }} />
+            <Form.Item name="time" label="Time" className="form-field-flex">
+              <TimePicker format="h:mm A" use12Hours className="form-field-full-width" />
             </Form.Item>
           )}
         </Flex>
 
-        <Form.Item name="isAllDay" valuePropName="checked" style={{ marginBottom: 16 }}>
+        <Form.Item name="isAllDay" valuePropName="checked" className="modal-all-day-toggle">
           <Flex align="center" gap={8}>
             <Switch checked={isAllDay} onChange={handleAllDayChange} />
             <span>All Day Event</span>
@@ -181,13 +181,9 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
             <Radio.Button value="work">
               <Flex align="center" gap={6}>
                 <span
-                  className="category-color-dot"
+                  className="category-dot"
                   style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: '50%',
                     backgroundColor: CATEGORY_COLORS.work,
-                    display: 'inline-block',
                   }}
                 />
                 Work
@@ -196,13 +192,9 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
             <Radio.Button value="home">
               <Flex align="center" gap={6}>
                 <span
-                  className="category-color-dot"
+                  className="category-dot"
                   style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: '50%',
                     backgroundColor: CATEGORY_COLORS.home,
-                    display: 'inline-block',
                   }}
                 />
                 Home
@@ -215,7 +207,7 @@ export function AppointmentModal({ open, onClose, appointment }: AppointmentModa
           <TextArea placeholder="Add notes (optional)" rows={3} />
         </Form.Item>
 
-        <Form.Item style={{ marginBottom: 0, marginTop: 24 }}>
+        <Form.Item className="modal-form-footer">
           <Flex justify={isEditMode ? 'space-between' : 'flex-end'} align="center">
             {isEditMode && (
               <Popconfirm

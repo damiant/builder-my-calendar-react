@@ -73,7 +73,7 @@ export function CalendarPage() {
   if (isLoading) {
     return (
       <div className="calendar-page">
-        <Flex justify="center" align="center" style={{ minHeight: '50vh' }}>
+        <Flex justify="center" align="center" className="page-loading-container">
           <Spin size="large" />
         </Flex>
       </div>
@@ -86,16 +86,16 @@ export function CalendarPage() {
       <OfflineBanner />
 
       {/* Top Controls Row */}
-      <Flex justify="space-between" align="center" style={{ marginBottom: 24 }}>
+      <Flex justify="space-between" align="center" className="top-controls-wrapper">
         <Flex gap={8} align="center">
           {/* Filter Tags */}
           {selectedFilters.includes('work') && (
-            <Tag closable onClose={() => handleTagClose('work')} style={{ margin: 0 }}>
+            <Tag closable onClose={() => handleTagClose('work')} className="filter-tag-no-margin">
               Work
             </Tag>
           )}
           {selectedFilters.includes('home') && (
-            <Tag closable onClose={() => handleTagClose('home')} style={{ margin: 0 }}>
+            <Tag closable onClose={() => handleTagClose('home')} className="filter-tag-no-margin">
               Home
             </Tag>
           )}
@@ -107,7 +107,7 @@ export function CalendarPage() {
             onChange={handleFilterChange}
             options={categoryOptions}
             placeholder="Add filter"
-            style={{ minWidth: 100 }}
+            className="select-md"
             maxTagCount={0}
             maxTagPlaceholder={() => null}
             allowClear={false}

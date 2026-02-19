@@ -33,11 +33,7 @@ export function SyncStatusIndicator() {
             shape="circle"
             icon={icon}
             size="large"
-            style={{
-              backgroundColor: 'var(--ant-color-bg-container)',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-              border: '1px solid var(--ant-color-border)',
-            }}
+            className="sync-button-style"
             aria-label={tooltipText}
           />
         </Badge>
