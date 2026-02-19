@@ -1,3 +1,8 @@
+---
+name: review
+description: Performs comprehensive code reviews following industry best practices. Checks functionality, code quality, TypeScript type safety, React patterns, performance, security, accessibility, testing, and more. Use when reviewing code changes or PRs.
+---
+
 # Code Review Skill
 
 This document outlines the detailed steps for performing a thorough code review.
