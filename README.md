@@ -1,6 +1,6 @@
 # My Calendar React
 
-A modern calendar application built with React, TypeScript, and Ant Design.
+A sample calendar application built with React, TypeScript, and Ant Design.
 
 ## Tech Stack
 
