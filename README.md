@@ -15,11 +15,6 @@ A sample calendar application built with React, TypeScript, and Ant Design.
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm
-
 ### Installation
 
 ```bash
