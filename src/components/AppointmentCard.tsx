@@ -60,7 +60,7 @@ export function AppointmentCard({ appointment, onEdit }: AppointmentCardProps) {
         borderLeftColor: categoryColor,
       }}
     >
-      <Flex vertical gap={8}>
+      <Flex vertical gap={8} style={{ paddingBottom: 'var(--space-large, 24px)' }}>
         {/* Day and Time */}
         <Flex justify="space-between" align="center">
           <Text type="secondary" className="card-day-text">
