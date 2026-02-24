@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Flex, Button, Segmented, Tag, Select, Spin } from 'antd';
+import { Flex, Button, Segmented, Tag, Select, Spin, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useAppointmentStore } from '../store/appointmentStore';
 import { AppointmentCalendar } from './AppointmentCalendar';
@@ -153,6 +153,13 @@ export function CalendarPage() {
 
       {/* Sync Status Indicator */}
       <SyncStatusIndicator />
+
+      {/* New Card Component */}
+      <Flex vertical>
+        <Card>
+          Card Content
+        </Card>
+      </Flex>
     </div>
   );
 }
