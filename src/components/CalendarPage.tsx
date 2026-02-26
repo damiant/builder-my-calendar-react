@@ -130,7 +130,7 @@ export function CalendarPage() {
 
       {/* Page Header */}
       <div className="calendar-page-header">
-        <h1 className="calendar-page-title">Appointments.</h1>
+        <h1 className="calendar-page-title">Appointments</h1>
         <p className="calendar-page-subtitle">Manage your work and home schedule</p>
       </div>
 
