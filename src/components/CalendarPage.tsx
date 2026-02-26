@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Flex, Button, Segmented, Tag, Select, Spin } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Flex, Button, Segmented, Tag, Dropdown, Checkbox, Spin } from 'antd';
+import { PlusOutlined, FilterOutlined } from '@ant-design/icons';
 import { useAppointmentStore } from '../store/appointmentStore';
 import { AppointmentCalendar } from './AppointmentCalendar';
 import { AppointmentModal } from './AppointmentModal';
@@ -101,20 +101,49 @@ export function CalendarPage() {
           )}
 
           {/* Filter Dropdown */}
-          <Select
-            mode="multiple"
-            value={selectedFilters}
-            onChange={handleFilterChange}
-            options={categoryOptions}
-            placeholder="Add filter"
-            className="select-md"
-            maxTagCount={0}
-            maxTagPlaceholder={() => null}
-            allowClear={false}
-            popupMatchSelectWidth={false}
-            variant="borderless"
-            suffixIcon={null}
-          />
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: 'work',
+                  label: (
+                    <Checkbox
+                      checked={selectedFilters.includes('work')}
+                      onChange={(e) => {
+                        const newFilters = e.target.checked
+                          ? [...selectedFilters, 'work']
+                          : selectedFilters.filter((f) => f !== 'work');
+                        handleFilterChange(newFilters as AppointmentCategory[]);
+                      }}
+                    >
+                      Work
+                    </Checkbox>
+                  ),
+                },
+                {
+                  key: 'home',
+                  label: (
+                    <Checkbox
+                      checked={selectedFilters.includes('home')}
+                      onChange={(e) => {
+                        const newFilters = e.target.checked
+                          ? [...selectedFilters, 'home']
+                          : selectedFilters.filter((f) => f !== 'home');
+                        handleFilterChange(newFilters as AppointmentCategory[]);
+                      }}
+                    >
+                      Home
+                    </Checkbox>
+                  ),
+                },
+              ],
+            }}
+            trigger={['click']}
+          >
+            <Button type="text" icon={<FilterOutlined />} size="small">
+              Filter
+            </Button>
+          </Dropdown>
         </Flex>
 
         <Flex gap={16} align="center">
