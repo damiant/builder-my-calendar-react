@@ -8,6 +8,7 @@
 
 .calendar-page-header {
   margin-bottom: var(--spacing-lg);
+  text-align: left;
 }
 
 .calendar-page-title {
