@@ -1,1 +1,14 @@
 - convert any hardcoded px values when applying a visual design to design tokens found in the design system 'ng-zoro'
+
+# Components
+- Use ng-zorro components from the design system first when creating new components.
+
+- Use components from this existing set in the project when creating components if ng-zorro is not applicable:
+AppointmentCalendar - Calendar view (month/year) component
+AppointmentCard - Individual appointment card for planner view
+AppointmentLegend - Color legend for appointment categories
+AppointmentModal - Modal dialog for creating/editing appointments
+CalendarPage - Main calendar page with controls and views
+OfflineBanner - Banner shown when offline
+PlannerView - Chronological list view of appointments
+SyncStatusIndicator - Shows sync status and pending operations
