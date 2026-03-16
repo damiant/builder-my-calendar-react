@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Flex, Button, Segmented, Tag, Dropdown, Checkbox, Spin } from 'antd';
 import { PlusOutlined, FilterOutlined } from '@ant-design/icons';
 import { useAppointmentStore } from '../store/appointmentStore';
@@ -16,16 +16,15 @@ const viewOptions = [
   { label: 'Planner', value: 'planner' },
 ];
 
-const categoryOptions = [
-  { label: 'Work', value: 'work' },
-  { label: 'Home', value: 'home' },
-];
-
 export function CalendarPage() {
   const { viewMode, setViewMode, setCategoryFilter, isLoading } = useAppointmentStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<AppointmentCategory[]>(['work', 'home']);
   const [editingAppointment, setEditingAppointment] = useState<Appointment | undefined>(undefined);
+
+  useEffect(() => {
+    document.title = 'Calendar';
+  }, []);
 
   const handleViewChange = useCallback(
     (value: string | number) => {
