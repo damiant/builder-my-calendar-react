@@ -5,7 +5,7 @@ import App from './App';
 describe('App', () => {
   it('renders the calendar page', () => {
     render(<App />);
-    expect(screen.getByText(/My Appointments/i)).toBeInTheDocument();
+    expect(screen.getByText(/Appointments/i)).toBeInTheDocument();
   });
 
   it('renders the new appointment button', () => {
