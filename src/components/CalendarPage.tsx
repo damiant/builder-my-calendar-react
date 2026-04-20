@@ -16,11 +16,6 @@ const viewOptions = [
   { label: 'Planner', value: 'planner' },
 ];
 
-const categoryOptions = [
-  { label: 'Work', value: 'work' },
-  { label: 'Home', value: 'home' },
-];
-
 export function CalendarPage() {
   const { viewMode, setViewMode, setCategoryFilter, isLoading } = useAppointmentStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
