@@ -22,7 +22,7 @@ export function AppointmentCalendar({
   onEditAppointment,
   onNewAppointment,
 }: AppointmentCalendarProps) {
-  const { getAppointmentsByDate, selectedDate, setSelectedDate, viewMode, categoryFilter } = useAppointmentStore();
+  const { getAppointmentsByDate, selectedDate, setSelectedDate, viewMode } = useAppointmentStore();
 
   const currentValue = useMemo(() => {
     return selectedDate ? dayjs(selectedDate) : dayjs();
@@ -140,7 +140,7 @@ export function AppointmentCalendar({
         </Flex>
       );
     },
-    [getAppointmentsByDate, handleAppointmentClick, handleAppointmentKeyDown, categoryFilter]
+    [getAppointmentsByDate, handleAppointmentClick, handleAppointmentKeyDown]
   );
 
   // Custom header renderer

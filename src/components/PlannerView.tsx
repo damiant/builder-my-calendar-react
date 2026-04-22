@@ -10,7 +10,7 @@ interface PlannerViewProps {
 }
 
 export function PlannerView({ onEditAppointment }: PlannerViewProps) {
-  const { getFilteredAppointments, isLoading, categoryFilter } = useAppointmentStore();
+  const { getFilteredAppointments, isLoading } = useAppointmentStore();
 
   // Get filtered and sorted appointments
   const appointments = useMemo(() => {
@@ -24,7 +24,7 @@ export function PlannerView({ onEditAppointment }: PlannerViewProps) {
       if (!a.isAllDay && b.isAllDay) return 1;
       return (a.time || '').localeCompare(b.time || '');
     });
-  }, [getFilteredAppointments, categoryFilter]);
+  }, [getFilteredAppointments]);
 
   const handleEdit = useCallback(
     (appointment: Appointment) => {
